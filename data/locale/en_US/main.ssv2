@@ -1,0 +1,7 @@
+core:
+	name: Core Module
+	desc: The core module for the game.
+
+title:
+	default: Space Game
+	
