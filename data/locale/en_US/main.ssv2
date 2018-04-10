@@ -1,7 +1,7 @@
 core:
 	name: Core Module
-	desc: The core module for the game.
+	desc: The core module for the engine.
+	version: v${version}
 
 title:
-	default: Space Game
-	
+	default: Core

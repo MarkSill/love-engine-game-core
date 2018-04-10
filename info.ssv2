@@ -2,3 +2,4 @@ id: core
 version: 0.1.0
 authors:
 	- MarkSill
+srcDir: src
