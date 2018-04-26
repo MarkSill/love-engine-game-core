@@ -3,5 +3,33 @@ core:
 	desc: The core module for the engine.
 	version: v${version}
 
+	title:
+		mainMenu: Main Menu
+		newGame: New Game
+		loadGame: Load Game
+		joinGame: Join Game
+		settings: Settings
+		mods: Mods
+		gameSelect:
+			singleplayer: Singleplayer
+			multiplayer: Multiplayer
+
+	action:
+		singleplayer: Singleplayer
+		multiplayer: Multiplayer
+		newGame: New Game
+		loadGame: Load Game
+		joinGame: Join Game
+		settings: Settings
+		mods: Mods
+		exit: Exit
+		back: Back
+
+	label:
+		welcome: Welcome to the game! It's still a very early alpha, so some things may not work as expected.
+		startGame: Choose an option to start playing!
+		notImplemented: This feature has not yet been implemented.
+		mod: ${name} (${id}, ${version})
+
 title:
 	default: Core
