@@ -3,7 +3,6 @@ cpml = require "cpml"
 module = game\getModule("core")
 
 module.start = =>
-	@camera = Core3D.Camera(0, 0, -3)
 	@sensitivity = 0.5
 	helper = Core3D.VertexHelper!
 	helper\addCube(0, 0, 0, 1)
@@ -13,20 +12,19 @@ module.start = =>
 	@model2 = Core3D.Model(helper.vertices)
 
 	@instance = Core3D.Instance(@model)
+	@instance.position = cpml.vec3(0, 1, 0)
+	@instance.rotation = cpml.vec3(math.rad(45))
 	@instance2 = Core3D.Instance(@model2)
-	@instance2.shader = Resource.Shader.create("engine/data/shaders/bright.glsl")
+	@instance2.shader = Resource.Shader.create("engine/data/shaders/bright")
 	@dragging = false
 	@following = true
 
-	sun = Core3D.DirectionalLight(cpml.vec3(-0.2, -1, -0.3), cpml.vec3(0.05, 0.05, 0.05), cpml.vec3(0.4, 0.4, 0.4), cpml.vec3(0.5, 0.5, 0.5))
+	sun = Core3D.DirectionalLight(cpml.vec3(-0.2, -1, -0.3), cpml.vec3(0.3, 0.3, 0.3), cpml.vec3(0.4, 0.4, 0.4), cpml.vec3(0.5, 0.5, 0.5))
 
 	@light = Core3D.PointLight(cpml.vec3(1, 1, 2), cpml.vec3(0.05, 0.05, 0.05), cpml.vec3(0.8, 0.8, 0.8), cpml.vec3(1, 1, 1), 1, 0.09, 0.032)
 	light = Core3D.PointLight(cpml.vec3(-2.3, 3.3, -4), cpml.vec3(0.5, 0.5, 0.5), cpml.vec3(0.8, 0.8, 0.8), cpml.vec3(1, 1, 1), 1, 0.09, 0.032)
 
 	@spot = Core3D.SpotLight(cpml.vec3!, cpml.vec3!, cpml.vec3(0.2), cpml.vec3(1), cpml.vec3(1), 1, 0.09, 0.032, math.cos(math.rad(12.5)), math.cos(math.rad(15)))
-
-	@material = Resource.Core3D.Material.create("engine/data/materials/basic.ssv2")
-	@instance.material = @material
 
 	skyboxCube = Resource.Core3D.Cubemap.create("engine/data/textures/skybox", "jpg")
 
@@ -37,17 +35,17 @@ module.start = =>
 	@floor.position = cpml.vec3(0, -0.5001, 0)
 
 	instance3 = Core3D.Instance(@model2)
-	instance3.shader = Resource.Shader.create("engine/data/shaders/bright.glsl")
+	instance3.shader = Resource.Shader.create("engine/data/shaders/bright")
 	instance3.position = light.position\clone!
 	instance3.shader\get!\send("lightColor", cpml.vec3.table(light.specular))
 
 	scene = game\setScene(Core.Scene.MainMenu!)
-	table.insert(scene.instances, @instance2)
-	table.insert(scene.instances, instance3)
+	-- table.insert(scene.instances, instance3)
 	table.insert(scene.instances, @floor)
+	table.insert(scene.instances, @instance2) --Instances currently have to be ordered correctly for shadows.
 	table.insert(scene.instances, @instance)
-	scene\addLight(@light)
-	scene\addLight(light)
+	-- scene\addLight(@light)
+	-- scene\addLight(light)
 	-- scene\addLight(@spot)
 	scene.skybox = skyboxCube
 	scene.sun = sun
@@ -59,7 +57,7 @@ module.start = =>
 module.update = (dt) =>
 	scene = game.scene
 	camera = scene.camera
-	speed = 3 *dt
+	speed = 3 * dt
 	if lk.isDown("w", "up")
 		camera.position += camera.front * speed
 	elseif lk.isDown("s", "down")
@@ -77,6 +75,8 @@ module.update = (dt) =>
 	@light.position.x = 1 + math.sin(t * 2)
 	@light.position.y = math.sin(t / 2) * 1
 
+	@instance.rotation += cpml.vec3(math.rad(1), math.rad(2), math.rad(1.5)) * dt * 50
+
 	@instance2.position = @light.position\clone!
 	@instance2.shader\get!\send("lightColor", cpml.vec3.table(@light.specular))
 
@@ -86,7 +86,8 @@ module.update = (dt) =>
 
 module.draw = =>
 	camera = game.scene.camera
-	lg.print("#{camera.position.x}, #{camera.position.y}, #{camera.position.z}\nfollowing: #{@following}")
+	lg.print("#{camera.position.x}, #{camera.position.y}, #{camera.position.z}\nFPS: #{lt.getFPS!}")
+	-- lg.draw(game.scene.sun.depthMap)
 
 module.keyPressed = (key, scancode, isRepeat) =>
 	if key == "escape"
