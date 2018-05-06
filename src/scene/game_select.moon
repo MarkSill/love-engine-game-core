@@ -1,7 +1,9 @@
 class GameSelect extends Scene
 	new: (@which) =>
+		super!
 
 	update: (dt) =>
+		super(dt)
 		ui.beginContainer(l("core.title.gameSelect.#{@which}"), 200, 200)
 		game\back! if ui.button(l("core.action.back"))
 		ui.label(l("core.label.startGame"))

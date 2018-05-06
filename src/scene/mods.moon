@@ -1,5 +1,6 @@
 class Mods extends Scene
 	update: (dt) =>
+		super(dt)
 		ui.beginContainer(l("core.title.mods"), 200, 200)
 		game\back! if ui.button(l("core.action.back"))
 		for module in *game.modules

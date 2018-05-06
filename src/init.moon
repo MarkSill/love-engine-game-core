@@ -26,8 +26,6 @@ module.start = =>
 
 	@spot = Core3D.SpotLight(cpml.vec3!, cpml.vec3!, cpml.vec3(0.2), cpml.vec3(1), cpml.vec3(1), 1, 0.09, 0.032, math.cos(math.rad(12.5)), math.cos(math.rad(15)))
 
-	skyboxCube = Resource.Core3D.Cubemap.create("engine/data/textures/skybox", "jpg")
-
 	helper = Core3D.VertexHelper!
 	helper\addQuadY(-10, -10, 10, 10, 0, cull:false, color:{1, 1, 1}, up:true)
 	floorModel = Core3D.Model(helper.vertices)
@@ -47,7 +45,6 @@ module.start = =>
 	-- scene\addLight(@light)
 	-- scene\addLight(light)
 	-- scene\addLight(@spot)
-	scene.skybox = skyboxCube
 	scene.sun = sun
 
 	game.dev = true
@@ -87,7 +84,6 @@ module.update = (dt) =>
 module.draw = =>
 	camera = game.scene.camera
 	lg.print("#{camera.position.x}, #{camera.position.y}, #{camera.position.z}\nFPS: #{lt.getFPS!}")
-	-- lg.draw(game.scene.sun.depthMap)
 
 module.keyPressed = (key, scancode, isRepeat) =>
 	if key == "escape"
