@@ -33,6 +33,8 @@ class MainMenu extends Scene
 		table.insert(@instances, @instance2)
 		table.insert(@instances, @floor)
 
+		@skybox = Resource.Core3D.Cubemap.create("engine/data/textures/skybox", "jpg")
+
 		game.dev = true
 
 	update: (dt) =>
