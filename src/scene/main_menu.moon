@@ -36,7 +36,6 @@ class MainMenu extends Scene
 		game.dev = true
 
 	update: (dt) =>
-		super(dt)
 		ui.beginContainer(l("core.title.mainMenu"), 200, 200)
 		ui.label(l("core.label.welcome"))
 		game\setScene(Core.Scene.Singleplayer!) if ui.button(l("core.action.singleplayer"))
@@ -74,6 +73,8 @@ class MainMenu extends Scene
 		if @following
 			@spot.position = -@camera.position
 			@spot.direction = @camera.front
+
+		super(dt)
 
 	draw: =>
 		super!
