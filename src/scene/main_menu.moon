@@ -19,7 +19,7 @@ class MainMenu extends Scene
 		@dragging = false
 		@following = true
 
-		@sun = Core3D.DirectionalLight(cpml.vec3(-0.2, -1, -0.3), cpml.vec3(0.3, 0.3, 0.3), cpml.vec3(0.4, 0.4, 0.4), cpml.vec3(0.5, 0.5, 0.5))
+		@sun = Core3D.DirectionalLight(cpml.vec3(2, -4, 1), cpml.vec3(0.3, 0.3, 0.3), cpml.vec3(0.4, 0.4, 0.4), cpml.vec3(0.5, 0.5, 0.5))
 		@light = Core3D.PointLight(cpml.vec3(1, 1, 2), cpml.vec3(0.05, 0.05, 0.05), cpml.vec3(0.8, 0.8, 0.8), cpml.vec3(1, 1, 1), 1, 0.09, 0.032)
 		@spot = Core3D.SpotLight(cpml.vec3!, cpml.vec3!, cpml.vec3(0.2), cpml.vec3(1), cpml.vec3(1), 1, 0.09, 0.032, math.cos(math.rad(12.5)), math.cos(math.rad(15)))
 
@@ -32,6 +32,8 @@ class MainMenu extends Scene
 		table.insert(@instances, @instance)
 		table.insert(@instances, @instance2)
 		table.insert(@instances, @floor)
+
+		-- @addLight(@light)
 
 		@skybox = Resource.Core3D.Cubemap.create("engine/data/textures/skybox", "jpg")
 
@@ -64,6 +66,8 @@ class MainMenu extends Scene
 		t = lt.getTime!
 		@light.position.x = 1 + math.sin(t * 2)
 		@light.position.y = math.sin(t / 2) * 1
+		@light.position = cpml.vec3(0, 3, 0)
+		-- @instance.position = @sun.position
 
 		@instance.rotation += cpml.vec3(math.rad(1), math.rad(2), math.rad(1.5)) * dt * 50
 		-- @instance.rotation = cpml.vec3(0)
@@ -75,6 +79,8 @@ class MainMenu extends Scene
 		if @following
 			@spot.position = -@camera.position
 			@spot.direction = @camera.front
+
+		-- @sun = nil
 
 		super(dt)
 
