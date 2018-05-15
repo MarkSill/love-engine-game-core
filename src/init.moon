@@ -1,5 +1,3 @@
-cpml = require "cpml"
-
 module = game\getModule("core")
 
 module.start = =>

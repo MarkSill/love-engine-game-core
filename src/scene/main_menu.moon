@@ -1,5 +1,3 @@
-cpml = require "cpml"
-
 class MainMenu extends Scene
 	new: =>
 		super!
@@ -46,6 +44,8 @@ class MainMenu extends Scene
 		game\setScene(Core.Scene.Multiplayer!) if ui.button(l("core.action.multiplayer"))
 		game\setScene(Core.Scene.Settings!) if ui.button(l("core.action.settings"))
 		game\setScene(Core.Scene.Mods!) if ui.button(l("core.action.mods"))
+		if game\getModule("model-editor")
+			game\setScene(ModelEditor.Scene.ModelEditor!) if ui.button(l("model-editor.action.model-editor"))
 		le.quit! if ui.button(l("core.action.exit"))
 		ui.endContainer!
 
